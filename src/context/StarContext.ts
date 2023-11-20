@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { ResultsType } from '../services/types';
+import { NumberType, ResultsType } from '../services/types';
 
 type StarContextType = {
   planetsList: ResultsType[],
@@ -7,6 +7,9 @@ type StarContextType = {
   filteredPlanetsList: ResultsType[],
   filteredByText: string,
   setFilteredByText: (data: string) => void,
+  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
+  filteredByNumber: NumberType,
+  setFilteredByNumber: (data:NumberType) => void,
 };
 
 const StarContext = createContext<StarContextType>({} as StarContextType);
