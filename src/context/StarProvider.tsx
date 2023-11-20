@@ -9,9 +9,12 @@ function StarProvider({ children }: { children: React.ReactNode }) {
     comparison: 'maior que',
     value: '0',
   };
+  const INITIAL_COLUMNS = ['population', 'orbital_period', 'diameter', 'rotation_period',
+    'surface_water'];
   const [planetsList, setPlanetsList] = useState<ResultsType[]>([]);
   const [filteredByText, setFilteredByText] = useState<string>('');
   const [filteredByNumber, setFilteredByNumber] = useState<NumberType>(INITIAL_VALUE);
+  const [avaibleColumns, setAvaibleColumns] = useState(INITIAL_COLUMNS);
   useEffect(() => {
     const fetch = async () => {
       const data = await fetchPlanets();
@@ -22,9 +25,14 @@ function StarProvider({ children }: { children: React.ReactNode }) {
 
   const filteredPlanetsList = planetsList.filter((planet) => planet.name
     .includes(filteredByText));
+
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const { column, comparison, value } = filteredByNumber;
+    const useableColumns = avaibleColumns.filter(
+      (columns) => columns !== column,
+    );
+    setAvaibleColumns(useableColumns);
     const filter = planetsList.filter((planet) => {
       if (comparison === 'menor que') {
         return Number(planet[column]) < Number(value);
@@ -48,6 +56,7 @@ function StarProvider({ children }: { children: React.ReactNode }) {
         handleSubmit,
         filteredByNumber,
         setFilteredByNumber,
+        avaibleColumns,
       } }
     >
       {children}

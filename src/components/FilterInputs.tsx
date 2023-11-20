@@ -3,7 +3,7 @@ import StarContext from '../context/StarContext';
 
 function FilterInputs() {
   const { filteredByText, setFilteredByText, filteredByNumber,
-    setFilteredByNumber, handleSubmit } = useContext(StarContext);
+    setFilteredByNumber, handleSubmit, avaibleColumns } = useContext(StarContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredByText(event.target.value);
@@ -15,9 +15,6 @@ function FilterInputs() {
     const { name, value } = event.target;
     setFilteredByNumber({ ...filteredByNumber, [name]: value });
   };
-
-  const colunas = ['population', 'orbital_period', 'diameter', 'rotation_period',
-    'surface_water'];
 
   const operadores = ['maior que', 'menor que', 'igual a'];
 
@@ -40,7 +37,7 @@ function FilterInputs() {
           value={ filteredByNumber.column }
           onChange={ handleChangeSelect }
         >
-          {colunas.map((coluna) => (
+          {avaibleColumns.map((coluna) => (
             <option key={ coluna } value={ coluna }>{ coluna }</option>
           ))}
         </select>

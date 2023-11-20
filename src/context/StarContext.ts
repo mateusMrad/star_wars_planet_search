@@ -10,6 +10,7 @@ type StarContextType = {
   handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
   filteredByNumber: NumberType,
   setFilteredByNumber: (data:NumberType) => void,
+  avaibleColumns: string[],
 };
 
 const StarContext = createContext<StarContextType>({} as StarContextType);
