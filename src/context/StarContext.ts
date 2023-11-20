@@ -7,10 +7,11 @@ type StarContextType = {
   filteredPlanetsList: ResultsType[],
   filteredByText: string,
   setFilteredByText: (data: string) => void,
-  handleSubmit: (event: React.FormEvent<HTMLFormElement>) => void,
+  handleSubmit: () => void,
   filteredByNumber: NumberType,
   setFilteredByNumber: (data:NumberType) => void,
   avaibleColumns: string[],
+  setAvaibleColumns: (data: string[]) => void,
 };
 
 const StarContext = createContext<StarContextType>({} as StarContextType);

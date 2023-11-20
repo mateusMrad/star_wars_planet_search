@@ -3,7 +3,8 @@ import StarContext from '../context/StarContext';
 
 function FilterInputs() {
   const { filteredByText, setFilteredByText, filteredByNumber,
-    setFilteredByNumber, handleSubmit, avaibleColumns } = useContext(StarContext);
+    setFilteredByNumber, handleSubmit,
+    avaibleColumns, setAvaibleColumns } = useContext(StarContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredByText(event.target.value);
@@ -18,6 +19,17 @@ function FilterInputs() {
 
   const operadores = ['maior que', 'menor que', 'igual a'];
 
+  const inUseColumns = (data: string) => {
+    const avaible = avaibleColumns.filter((coluna) => coluna !== data);
+    setAvaibleColumns(avaible);
+  };
+
+  const handleClick = (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const { column } = filteredByNumber;
+    inUseColumns(column);
+    handleSubmit();
+  };
   return (
     <div>
       <label htmlFor="filtet-text">
@@ -30,7 +42,7 @@ function FilterInputs() {
           onChange={ handleChange }
         />
       </label>
-      <form onSubmit={ handleSubmit }>
+      <form onSubmit={ handleClick }>
         <select
           data-testid="column-filter"
           name="column"

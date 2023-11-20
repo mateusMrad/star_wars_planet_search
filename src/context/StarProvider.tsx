@@ -26,13 +26,8 @@ function StarProvider({ children }: { children: React.ReactNode }) {
   const filteredPlanetsList = planetsList.filter((planet) => planet.name
     .includes(filteredByText));
 
-  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     const { column, comparison, value } = filteredByNumber;
-    const useableColumns = avaibleColumns.filter(
-      (columns) => columns !== column,
-    );
-    setAvaibleColumns(useableColumns);
     const filter = planetsList.filter((planet) => {
       if (comparison === 'menor que') {
         return Number(planet[column]) < Number(value);
@@ -43,6 +38,7 @@ function StarProvider({ children }: { children: React.ReactNode }) {
       return Number(planet[column]) === Number(value);
     });
     setPlanetsList(filter);
+    setFilteredByNumber(INITIAL_VALUE);
   };
 
   return (
@@ -57,6 +53,7 @@ function StarProvider({ children }: { children: React.ReactNode }) {
         filteredByNumber,
         setFilteredByNumber,
         avaibleColumns,
+        setAvaibleColumns,
       } }
     >
       {children}
