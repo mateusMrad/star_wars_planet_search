@@ -1,10 +1,11 @@
 import { useContext } from 'react';
 import StarContext from '../context/StarContext';
+import FilterInputs from './FilterInputs';
 
 function Table() {
-  const { planetsList } = useContext(StarContext);
+  const { filteredPlanetsList } = useContext(StarContext);
 
-  const PlanetsInfo = planetsList.map((planet) => (
+  const PlanetsInfo = filteredPlanetsList.map((planet) => (
     <tr key={ planet.name }>
       <td>{planet.name}</td>
       <td>{planet.rotation_period}</td>
@@ -22,28 +23,31 @@ function Table() {
     </tr>
   ));
   return (
-    <table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Rotation Period</th>
-          <th>Orbital Period</th>
-          <th>Diameter</th>
-          <th>Climate</th>
-          <th>Gravity</th>
-          <th>Terrain</th>
-          <th>Surface Water</th>
-          <th>Population</th>
-          <th>Films</th>
-          <th>Created</th>
-          <th>Edited</th>
-          <th>Url</th>
-        </tr>
-      </thead>
-      <tbody>
-        {PlanetsInfo}
-      </tbody>
-    </table>
+    <div>
+      <FilterInputs />
+      <table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Rotation Period</th>
+            <th>Orbital Period</th>
+            <th>Diameter</th>
+            <th>Climate</th>
+            <th>Gravity</th>
+            <th>Terrain</th>
+            <th>Surface Water</th>
+            <th>Population</th>
+            <th>Films</th>
+            <th>Created</th>
+            <th>Edited</th>
+            <th>Url</th>
+          </tr>
+        </thead>
+        <tbody>
+          {PlanetsInfo}
+        </tbody>
+      </table>
+    </div>
   );
 }
 
