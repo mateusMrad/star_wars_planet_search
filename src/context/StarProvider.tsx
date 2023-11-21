@@ -16,11 +16,11 @@ function StarProvider({ children }: { children: React.ReactNode }) {
   const [filteredByNumber, setFilteredByNumber] = useState<NumberType>(INITIAL_VALUE);
   const [avaibleColumns, setAvaibleColumns] = useState(INITIAL_COLUMNS);
   useEffect(() => {
-    const fetch = async () => {
+    const getData = async () => {
       const data = await fetchPlanets();
       setPlanetsList(data);
     };
-    fetch();
+    getData();
   }, []);
 
   const filteredPlanetsList = planetsList.filter((planet) => planet.name
