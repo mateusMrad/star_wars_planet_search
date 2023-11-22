@@ -1,11 +1,16 @@
 import { useContext } from 'react';
 import StarContext from '../context/StarContext';
+import { ResultsType } from '../services/types';
+import { sortAction } from '../services/helpers';
 
 function FilterInputs() {
+  const INITIAL_COLUMNS = ['rotation_period', 'orbital_period', 'diameter', 'population',
+    'surface_water'];
   const { filteredByText, setFilteredByText, filteredByNumber,
     setFilteredByNumber, handleSubmit,
     avaibleColumns, setAvaibleColumns, arrayNumbers,
-    setArrayNumbers } = useContext(StarContext);
+    setArrayNumbers, ordenation, setOrdenation,
+    allPlanets, setPlanetsList } = useContext(StarContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredByText(event.target.value);
@@ -32,8 +37,6 @@ function FilterInputs() {
     handleSubmit();
   };
 
-  const INITIAL_COLUMNS = ['population', 'orbital_period', 'diameter', 'rotation_period',
-    'surface_water'];
   const deleteAllFilters = () => {
     setArrayNumbers([]);
     setAvaibleColumns(INITIAL_COLUMNS);
@@ -44,6 +47,18 @@ function FilterInputs() {
     setArrayNumbers(filterArray);
     const newColumns = INITIAL_COLUMNS.find((column) => column === data);
     setAvaibleColumns([...avaibleColumns, newColumns as string]);
+  };
+
+  const handleChangeOrder = (
+    event: React.ChangeEvent<HTMLSelectElement | HTMLInputElement>,
+  ) => {
+    const { name, value } = event.target;
+    setOrdenation({ ...ordenation, [name]: value });
+  };
+
+  const orderClick = (list: ResultsType[]) => {
+    const sorted = sortAction(list, ordenation);
+    setPlanetsList([...sorted]);
   };
   return (
     <div>
@@ -89,6 +104,49 @@ function FilterInputs() {
         />
         <button data-testid="button-filter" type="submit"> Filter </button>
       </form>
+      <p>Sort For:</p>
+      <select
+        data-testid="column-sort"
+        name="columnSorted"
+        onChange={ handleChangeOrder }
+      >
+        {INITIAL_COLUMNS.map((column) => (
+          <option
+            value={ column }
+            key={ column }
+          >
+            { column }
+          </option>
+        ))}
+      </select>
+      <label htmlFor="descending">
+        <input
+          type="radio"
+          data-testid="column-sort-input-desc"
+          name="sort"
+          value="desc"
+          onChange={ handleChangeOrder }
+          id="descending"
+        />
+        Descending
+      </label>
+      <label htmlFor="ascending">
+        <input
+          type="radio"
+          data-testid="column-sort-input-asc"
+          name="sort"
+          value="asc"
+          onChange={ handleChangeOrder }
+          id="ascending"
+        />
+        Ascending
+      </label>
+      <button
+        data-testid="column-sort-button"
+        onClick={ () => orderClick(allPlanets) }
+      >
+        Sort
+      </button>
       {arrayNumbers && arrayNumbers.map((list) => (
         <div key={ list.column }>
           <p data-testid="filter">

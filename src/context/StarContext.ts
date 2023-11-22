@@ -1,5 +1,5 @@
 import { createContext } from 'react';
-import { NumberType, ResultsType } from '../services/types';
+import { NumberType, ResultsType, SortType } from '../services/types';
 
 type StarContextType = {
   planetsList: ResultsType[],
@@ -14,6 +14,9 @@ type StarContextType = {
   setAvaibleColumns: (data: string[]) => void,
   arrayNumbers: NumberType[],
   setArrayNumbers: (data: NumberType[]) => void,
+  ordenation: SortType,
+  setOrdenation: (data: SortType) => void,
+  allPlanets: ResultsType[],
 };
 
 const StarContext = createContext<StarContextType>({} as StarContextType);

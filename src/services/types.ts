@@ -7,3 +7,8 @@ export type NumberType = {
   comparison: string,
   value: string,
 };
+
+export type SortType = {
+  columnSorted: string,
+  sort: string,
+};

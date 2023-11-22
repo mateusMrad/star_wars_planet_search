@@ -1,4 +1,4 @@
-import { NumberType, ResultsType } from './types';
+import { NumberType, ResultsType, SortType } from './types';
 
 export const fetchPlanets = async () => {
   const response = await fetch('https://swapi.dev/api/planets');
@@ -33,4 +33,18 @@ export const NewFilter = (
     return item;
   });
   return filterUse;
+};
+export const sortAction = (
+  list: ResultsType[],
+  sorted: SortType,
+) => {
+  const { columnSorted, sort } = sorted;
+  const order = list.sort((a:any, b:any) => {
+    if (b[columnSorted] === 'unknown') return -1;
+    if (sort === 'asc') {
+      return a[columnSorted] - b[columnSorted];
+    }
+    return b[columnSorted] - a[columnSorted];
+  });
+  return order;
 };

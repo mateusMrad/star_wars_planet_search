@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { fetchPlanets } from '../services/helpers';
 import StarContext from './StarContext';
-import { NumberType, ResultsType } from '../services/types';
+import { NumberType, ResultsType, SortType } from '../services/types';
 
 function StarProvider({ children }: { children: React.ReactNode }) {
   const INITIAL_VALUE = {
@@ -16,10 +16,15 @@ function StarProvider({ children }: { children: React.ReactNode }) {
   const [filteredByNumber, setFilteredByNumber] = useState<NumberType>(INITIAL_VALUE);
   const [avaibleColumns, setAvaibleColumns] = useState(INITIAL_COLUMNS);
   const [arrayNumbers, setArrayNumbers] = useState<NumberType[]>([]);
+  const [ordenation, setOrdenation] = useState<SortType>({
+    columnSorted: 'population', sort: '',
+  });
+  const [allPlanets, SetAllPlanets] = useState<ResultsType[]>([]);
   useEffect(() => {
     const getData = async () => {
       const data = await fetchPlanets();
       setPlanetsList(data);
+      SetAllPlanets(data);
     };
     getData();
   }, []);
@@ -49,6 +54,9 @@ function StarProvider({ children }: { children: React.ReactNode }) {
         setAvaibleColumns,
         arrayNumbers,
         setArrayNumbers,
+        ordenation,
+        setOrdenation,
+        allPlanets,
       } }
     >
       {children}
