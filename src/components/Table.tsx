@@ -1,11 +1,14 @@
 import { useContext } from 'react';
 import StarContext from '../context/StarContext';
 import FilterInputs from './FilterInputs';
+import { NewFilter } from '../services/helpers';
 
 function Table() {
-  const { filteredPlanetsList } = useContext(StarContext);
+  const { filteredPlanetsList, arrayNumbers } = useContext(StarContext);
 
-  const PlanetsInfo = filteredPlanetsList.map((planet) => (
+  const newPlanets = NewFilter(arrayNumbers, filteredPlanetsList);
+
+  const PlanetsInfo = newPlanets.map((planet) => (
     <tr key={ planet.name }>
       <td>{planet.name}</td>
       <td>{planet.rotation_period}</td>

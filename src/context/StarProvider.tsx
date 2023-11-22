@@ -15,6 +15,7 @@ function StarProvider({ children }: { children: React.ReactNode }) {
   const [filteredByText, setFilteredByText] = useState<string>('');
   const [filteredByNumber, setFilteredByNumber] = useState<NumberType>(INITIAL_VALUE);
   const [avaibleColumns, setAvaibleColumns] = useState(INITIAL_COLUMNS);
+  const [arrayNumbers, setArrayNumbers] = useState<NumberType[]>([]);
   useEffect(() => {
     const getData = async () => {
       const data = await fetchPlanets();
@@ -27,17 +28,9 @@ function StarProvider({ children }: { children: React.ReactNode }) {
     .includes(filteredByText));
 
   const handleSubmit = () => {
-    const { column, comparison, value } = filteredByNumber;
-    const filter = planetsList.filter((planet) => {
-      if (comparison === 'menor que') {
-        return Number(planet[column]) < Number(value);
-      }
-      if (comparison === 'maior que') {
-        return Number(planet[column]) > Number(value);
-      }
-      return Number(planet[column]) === Number(value);
-    });
-    setPlanetsList(filter);
+    setArrayNumbers((prevstate) => [
+      ...prevstate, filteredByNumber,
+    ]);
     setFilteredByNumber(INITIAL_VALUE);
   };
 
@@ -54,6 +47,8 @@ function StarProvider({ children }: { children: React.ReactNode }) {
         setFilteredByNumber,
         avaibleColumns,
         setAvaibleColumns,
+        arrayNumbers,
+        setArrayNumbers,
       } }
     >
       {children}

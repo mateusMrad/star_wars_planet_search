@@ -12,6 +12,8 @@ type StarContextType = {
   setFilteredByNumber: (data:NumberType) => void,
   avaibleColumns: string[],
   setAvaibleColumns: (data: string[]) => void,
+  arrayNumbers: NumberType[],
+  setArrayNumbers: (data: NumberType[]) => void,
 };
 
 const StarContext = createContext<StarContextType>({} as StarContextType);

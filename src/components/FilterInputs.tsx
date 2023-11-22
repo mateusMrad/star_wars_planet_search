@@ -4,7 +4,8 @@ import StarContext from '../context/StarContext';
 function FilterInputs() {
   const { filteredByText, setFilteredByText, filteredByNumber,
     setFilteredByNumber, handleSubmit,
-    avaibleColumns, setAvaibleColumns } = useContext(StarContext);
+    avaibleColumns, setAvaibleColumns, arrayNumbers,
+    setArrayNumbers } = useContext(StarContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredByText(event.target.value);
@@ -29,6 +30,20 @@ function FilterInputs() {
     const { column } = filteredByNumber;
     inUseColumns(column);
     handleSubmit();
+  };
+
+  const INITIAL_COLUMNS = ['population', 'orbital_period', 'diameter', 'rotation_period',
+    'surface_water'];
+  const deleteAllFilters = () => {
+    setArrayNumbers([]);
+    setAvaibleColumns(INITIAL_COLUMNS);
+  };
+
+  const deleteOneFilter = (data: string) => {
+    const filterArray = arrayNumbers.filter((columns) => columns.column !== data);
+    setArrayNumbers(filterArray);
+    const newColumns = INITIAL_COLUMNS.find((column) => column === data);
+    setAvaibleColumns([...avaibleColumns, newColumns as string]);
   };
   return (
     <div>
@@ -74,6 +89,28 @@ function FilterInputs() {
         />
         <button data-testid="button-filter" type="submit"> Filter </button>
       </form>
+      {arrayNumbers && arrayNumbers.map((list) => (
+        <div key={ list.column }>
+          <p data-testid="filter">
+            { list.column }
+            {' '}
+            { list.comparison }
+            {' '}
+            { list.value }
+            <button
+              onClick={ () => deleteOneFilter(list.column) }
+            >
+              Delete Filter
+            </button>
+          </p>
+        </div>
+      ))}
+      <button
+        onClick={ deleteAllFilters }
+        data-testid="button-remove-filters"
+      >
+        Delete All Fillters
+      </button>
     </div>
   );
 }
