@@ -10,7 +10,7 @@ function FilterInputs() {
     setFilteredByNumber, handleSubmit,
     avaibleColumns, setAvaibleColumns, arrayNumbers,
     setArrayNumbers, ordenation, setOrdenation,
-    allPlanets, setPlanetsList } = useContext(StarContext);
+    setPlanetsList, planetsList } = useContext(StarContext);
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     setFilteredByText(event.target.value);
@@ -143,7 +143,7 @@ function FilterInputs() {
       </label>
       <button
         data-testid="column-sort-button"
-        onClick={ () => orderClick(allPlanets) }
+        onClick={ () => orderClick(planetsList) }
       >
         Sort
       </button>

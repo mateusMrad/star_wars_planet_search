@@ -2,6 +2,7 @@ import { fireEvent, render, screen } from '@testing-library/react';
 import App from '../App';
 import mockdata from '../services/mockdata';
 import { vi } from 'vitest'
+import { findRenderedComponentWithType } from 'react-dom/test-utils';
 
 const mock = {
   ok: true,
@@ -34,5 +35,34 @@ describe('testando as funcionalidades', () => {
     expect(operador).toBeInTheDocument();
     fireEvent.change(operador, {target: {value: 'menor que'}});
     expect(operador).toHaveDisplayValue('menor que')
-  })
+  });
+  test('testando a remocao de filtros', () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue(mock);
+    render(<App />);
+    const column = screen.getByTestId('column-filter');
+    expect(column).toBeInTheDocument();
+    fireEvent.change(column, {target: {value: 'diameter'}});
+    const value = screen.getByTestId('value-filter');
+    expect(value).toBeInTheDocument();
+    fireEvent.change(value, {target: {value: '118000'}});
+    const operador = screen.getByTestId('comparison-filter');
+    expect(operador).toBeInTheDocument();
+    fireEvent.change(operador, {target: {value: 'igual a'}});
+    const filterBtn = screen.getByTestId('button-remove-filters');
+    expect(filterBtn).toBeInTheDocument();
+    fireEvent.click(filterBtn);
+  });
+  test('testando o botao de filtragem', () => {
+    vi.spyOn(global, 'fetch').mockResolvedValue(mock);
+    render(<App />);
+    const column = screen.getByTestId('column-sort');
+    expect(column).toBeInTheDocument();
+    fireEvent.change(column, {target: {value: 'diameter'}});
+    const asc = screen.getByTestId('column-sort-input-asc');
+    expect(asc).toBeInTheDocument();
+    fireEvent.click(asc);
+    const sortBtn = screen.getByTestId('column-sort-button');
+    expect(sortBtn).toBeInTheDocument
+    fireEvent.click(sortBtn);
+  } )
 })
