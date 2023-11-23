@@ -19,12 +19,10 @@ function StarProvider({ children }: { children: React.ReactNode }) {
   const [ordenation, setOrdenation] = useState<SortType>({
     columnSorted: 'population', sort: '',
   });
-  const [allPlanets, SetAllPlanets] = useState<ResultsType[]>([]);
   useEffect(() => {
     const getData = async () => {
       const data = await fetchPlanets();
       setPlanetsList(data);
-      SetAllPlanets(data);
     };
     getData();
   }, []);
@@ -56,7 +54,6 @@ function StarProvider({ children }: { children: React.ReactNode }) {
         setArrayNumbers,
         ordenation,
         setOrdenation,
-        allPlanets,
       } }
     >
       {children}

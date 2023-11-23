@@ -16,7 +16,6 @@ type StarContextType = {
   setArrayNumbers: (data: NumberType[]) => void,
   ordenation: SortType,
   setOrdenation: (data: SortType) => void,
-  allPlanets: ResultsType[],
 };
 
 const StarContext = createContext<StarContextType>({} as StarContextType);
