@@ -108,6 +108,7 @@ function FilterInputs() {
       <select
         data-testid="column-sort"
         name="columnSorted"
+        value={ ordenation.columnSorted }
         onChange={ handleChangeOrder }
       >
         {INITIAL_COLUMNS.map((column) => (
